@@ -1,0 +1,53 @@
+.title {
+    color: antiquewhite;
+    margin-top: 1px;
+}
+
+.row-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-column {
+    width: 70%;
+}
+
+.right-column {
+    width: 30%;
+}
+
+.squares {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.icon1 {
+    width: 70px;
+    height: 70px;
+    font-size: small;
+    color: azure;
+    background: #449141;
+    margin-right: 10%;
+    border-style: ridge;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.matchs {
+    padding: 2px;
+}
+
+.scrollable {
+    margin: 5px;
+    padding: 5px;
+    background: linear-gradient(90deg, rgb(180, 226, 197) 0%, rgb(20, 32, 31) 0%, rgb(34, 63, 66) 50%, rgb(18, 35, 37) 100%);
+    width: 600px;
+    height: 500px;
+    overflow: auto;
+    border: 1ch;
+    border-style: inset;
+}

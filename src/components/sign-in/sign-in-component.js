@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import './sign-in.css';
 
-export default function RegistrationComponent() {
+export default function SignInComponent() {
 	const [values, setValues] = useState({
         firstName: "",
         lastName: "",
