@@ -32,8 +32,8 @@ const LotComponent = ({ }) => {
     if (document.getElementById("clock") != null) {
       document.getElementById("clock").innerHTML = hr + ":" + min + ":" + sec + " " + ap;
       //variables
-      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Deciembre'];
+      var days = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
       var curWeekDay = days[today.getDay()];
       var curDay = today.getDate();
       var curMonth = months[today.getMonth()];
