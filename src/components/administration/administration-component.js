@@ -6,22 +6,23 @@ import LotComponent from './lot-component';
 const AdministrationComponent = () => {
   return (
     <>
-      <header>
-        <HeaderComponent></HeaderComponent>
-      </header>
-      <body>
-        <div className='row-body'>
-          <div className='left-column'>
-            <LotComponent></LotComponent>
-          </div>
-          <div className='right-column'>
-            <BodyComponent></BodyComponent>
-          </div>
+      <HeaderComponent></HeaderComponent>
+      <br></br>
+      <div class="split left">
+        <div className='centered'>
+          <LotComponent></LotComponent>
         </div>
 
-      </body>
-      <footer>
-      </footer>
+      </div>
+      <div class="split right">
+        <div className='centered'>
+          <BodyComponent></BodyComponent>
+        </div>
+
+      </div>
+
+
+
 
     </>
   )
