@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import TableComponent from './table-component';
 import Lot from './lot';
+import LotJSON from './objects/lot.json';
 
 const LotComponent = ({ }) => {
+  const [lots, setLots] = useState(LotJSON);
   const columns = [
     { path: "A" },
     { path: "B" },
@@ -17,6 +19,7 @@ const LotComponent = ({ }) => {
     { A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot> }
   ];
 
+  //***************************************/
   function startTime() {
     var today = new Date();
     var hr = today.getHours();
@@ -43,16 +46,14 @@ const LotComponent = ({ }) => {
     }
     var time = setTimeout(function () { startTime() }, 500);
   }
-
   function checkTime(i) {
     if (i < 10) {
       i = "0" + i;
     }
     return i;
   }
-
   startTime();
-
+  //***************************************/
   return (
     <>
       <div id="clockdate">

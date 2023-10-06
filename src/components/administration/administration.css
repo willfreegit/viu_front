@@ -1,8 +1,8 @@
+/********************************************************************************/
 .title {
     color: antiquewhite;
     margin-top: 1px;
 }
-
 .squares {
     display: flex;
     justify-content: center;
@@ -10,7 +10,6 @@
     align-content: center;
     text-align: center;
 }
-
 .icon1 {
     width: 70px;
     height: 70px;
@@ -23,11 +22,21 @@
     align-items: center;
     justify-content: center;
 }
-
+.icon2 {
+    width: 70px;
+    height: 70px;
+    font-size: small;
+    color: azure;
+    background: #414991;
+    margin-right: 10%;
+    border-style: ridge;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .matchs {
     padding: 2px;
 }
-
 .scrollable {
     margin: 5px;
     padding: 5px;
@@ -38,17 +47,15 @@
     border: 1ch;
     /*border-style: inset;*/
 }
-
+/********************************************************************************/
 /* RIGTH PART OF THE SCREEN*/
 .div {
     margin-bottom: 10px;
 }
-
 .title{
     color: #ff9900; background: #fff4a3; text-decoration: none; width: 300px; margin-left: 200px; font-size: medium; 
     font-weight: bold; border: #5da385; border-style: dotted; font-family: Digital-7, 'sans-serif';
 }
-
 .label {
     font-size: 16px; font-weight: 300; color: #ffcc66; margin: 0 0 24px;
     display: inline-block;
@@ -56,7 +63,6 @@
     margin-right: 15px;
     text-align: right;
 }
-
 .input {
     width: 100px;
     border-radius: 10px;
@@ -70,7 +76,6 @@
     padding: 5px 1rem;
     transition: 0.25s;
   }
-
   .button {
     --green: #1BFD9C;
     font-size: 15px;
@@ -88,12 +93,10 @@
     color: var(--green);
     box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4), 0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
-  
   .button:hover {
     color: #82ffc9;
     box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.6), 0 0 9px 3px rgba(27, 253, 156, 0.2);
   }
-  
  .button:before {
     content: "";
     position: absolute;
@@ -104,13 +107,10 @@
     transition: transform .4s ease-in-out;
     background: linear-gradient(to right, transparent 1%, rgba(27, 253, 156, 0.1) 40%,rgba(27, 253, 156, 0.1) 60% , transparent 100%);
   }
-  
   .button:hover:before {
     transform: translateX(15em);
   }
-
-
-
+/********************************************************************************/
 /* Split the screen in half */
 .split {
     height: 100%;
@@ -121,19 +121,16 @@
     overflow-x: hidden;
     padding-top: 30px;
 }
-
 /* Control the left side */
 .left {
     left: 0;
     background: linear-gradient(90deg, rgb(15, 15, 15) 0%, rgb(24, 27, 32) 0%, rgb(28, 26, 41) 50%, rgb(24, 27, 32) 100%);
 }
-
 /* Control the right side */
 .right {
     right: 0;
     background: linear-gradient(90deg, rgb(180, 226, 197) 0%, rgb(59, 141, 76) 0%, rgb(17, 107, 71) 50%, rgb(44, 128, 82) 100%);
 }
-
 /* If you want the content centered horizontally and vertically */
 .centered {
     position: absolute;
@@ -142,8 +139,7 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
-
-
+/********************************************************************************/
 /*CLOCK*/
 .clockdate-wrapper {
     background: #141E30;  /* fallback for old browsers */
@@ -156,14 +152,12 @@
     border-radius:5px;
     margin:0 auto;
 }
-
 #clock{
     font-family: Digital-7, 'sans-serif';
     font-size:30px;
     text-shadow:0px 0px 1px #fff;
     color:#fff;
 }
-
 #clock span {
     color: rgba(255, 255, 255, 0.8);
     text-shadow:0px 0px 1px #333;
@@ -172,7 +166,6 @@
     top:-5px;
     left:10px;
 }
-
 #date {
     letter-spacing:3px;
     font-size:14px;
