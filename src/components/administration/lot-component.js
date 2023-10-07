@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import TableComponent from './table-component';
 import Lot from './lot';
-import LotJSON from './objects/lot.json';
 
-const LotComponent = ({ }) => {
-  const [lots, setLots] = useState(LotJSON);
+const LotComponent = ({ arrayVertical, lots, updateLot }) => {
+
+  
+
+  console.log("array vertical");
+  console.log(arrayVertical);
+
   const columns = [
-    { path: "A" },
-    { path: "B" },
-    { path: "C" },
-    { path: "D" },
+    { path: "0" },
+    { path: "1" },
+    { path: "2" },
+    { path: "3" },
+    { path: "4" },
+    { path: "5" },
+    { path: "6" },
   ];
 
   const data = [
 
-    { A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot>, D: <Lot></Lot> },
-    { A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot> },
-    { A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot> }
+     <Lot></Lot> , <Lot></Lot>, <Lot></Lot>  
+    /*{ A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot> },
+    { A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot> }*/
   ];
 
   //***************************************/
@@ -57,14 +64,14 @@ const LotComponent = ({ }) => {
   return (
     <>
       <div id="clockdate">
-        <div class="clockdate-wrapper">
+        <div className="clockdate-wrapper">
           <div id="clock"></div>
           <div id="date"></div>
         </div>
       </div>
 
       <div className='scrollable'>
-        <TableComponent id="id" columns={columns} data={data} />
+        <TableComponent lots={lots} data={arrayVertical} updateLot={updateLot}/>
       </div>
     </>
   )

@@ -10,7 +10,7 @@
     align-content: center;
     text-align: center;
 }
-.icon1 {
+.OCUPADO {
     width: 70px;
     height: 70px;
     font-size: small;
@@ -22,12 +22,36 @@
     align-items: center;
     justify-content: center;
 }
-.icon2 {
+.CLICKED {
     width: 70px;
     height: 70px;
     font-size: small;
     color: azure;
     background: #414991;
+    margin-right: 10%;
+    border-style: ridge;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.LIBRE {
+    width: 70px;
+    height: 70px;
+    font-size: small;
+    color: azure;
+    background: #4686e7;
+    margin-right: 10%;
+    border-style: ridge;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.MANTENIMIENTO {
+    width: 70px;
+    height: 70px;
+    font-size: small;
+    color: azure;
+    background: #dd3f00;
     margin-right: 10%;
     border-style: ridge;
     display: flex;

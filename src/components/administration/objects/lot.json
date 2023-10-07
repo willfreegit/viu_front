@@ -1,3 +1,9 @@
 [
-    { "lotId":"", "lotType":"", "lotRegister":"", "lotTimeIn": "", "lotTimeOut":"", "lotTimeTotal":"0", "lotPrice":"0", "lotState":"" }
+    { "lot_code":"A1", "lot_type":"car", "lot_register":"ABH7916", "lot_timeIn": "", "lot_timeOut":"", "lot_timeTotal":"0", "lot_price":"0", "lot_state":"LIBRE", "lot_clicked": "NO", "lot_style": "LIBRE" },
+    { "lot_code":"A2", "lot_type":"moto", "lot_register":"PBQ0151", "lot_timeIn": "", "lot_timeOut":"", "lot_timeTotal":"0", "lot_price":"0", "lot_state":"LIBRE", "lot_clicked": "NO", "lot_style": "LIBRE"  },
+    { "lot_code":"A3", "lot_type":"moto", "lot_register":"PBQ0151", "lot_timeIn": "", "lot_timeOut":"", "lot_timeTotal":"0", "lot_price":"0", "lot_state":"LIBRE", "lot_clicked": "NO", "lot_style": "LIBRE"  },
+    { "lot_code":"A4", "lot_type":"car", "lot_register":"PBQ0151", "lot_timeIn": "", "lot_timeOut":"", "lot_timeTotal":"0", "lot_price":"0", "lot_state":"LIBRE", "lot_clicked": "NO", "lot_style": "LIBRE"  },
+    { "lot_code":"A5", "lot_type":"car", "lot_register":"PBQ0151", "lot_timeIn": "", "lot_timeOut":"", "lot_timeTotal":"0", "lot_price":"0", "lot_state":"LIBRE", "lot_clicked": "NO", "lot_style": "LIBRE"  },
+    { "lot_code":"A6", "lot_type":"car", "lot_register":"PBQ0151", "lot_timeIn": "", "lot_timeOut":"", "lot_timeTotal":"0", "lot_price":"0", "lot_state":"LIBRE", "lot_clicked": "NO", "lot_style": "LIBRE"  },
+    { "lot_code":"A7", "lot_type":"car", "lot_register":"PBQ0151", "lot_timeIn": "", "lot_timeOut":"", "lot_timeTotal":"0", "lot_price":"0", "lot_state":"LIBRE", "lot_clicked": "NO", "lot_style": "LIBRE"  }
 ]

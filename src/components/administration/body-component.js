@@ -1,31 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import './administration.css';
 
-const BodyComponent = () => {
+const BodyComponent = ({ lot }) => {
+    console.log("lot_register:");
+    console.log(lot.lot_register);
+     const[register, setRegister] = useState(lot.lot_register);
 
+     const changeRegister = (e)=>{
+        lot.lot_register = e.target.value;
+     }
+
+console.log("ssssssssssssss");
+console.log(lot);
     return (
         <div className='div'>
             <p className='title'>PARQUEADERO LA LIBERTAD</p>
             <form action="/form/submit" method="post">
                 <div className='div'>
                     <label className='label'><b>LOTE:</b></label>
-                    <input className= "input" type="text" />
+                    <input className= "input" type="text" value={lot.lot_code}/>
                 </div>
                 <div className='div'>
                     <label className='label'><b>TIPO:</b></label>
-                    <input className= "input" type="text" />
+                    <input className= "input" type="text" value={lot.lot_type}/>
                 </div>
                 <div className='div'>
                     <label className='label'><b>PLACA:</b></label>
-                    <input className= "input" type="text" />
+                    <input className= "input" type="text" value={register} onChange={changeRegister}
+                    onKeyPress={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                    }}
+                    />
                 </div>
                 <div className='div'>
                     <label className='label'><b>HORA ENTRADA:</b></label>
-                    <input className= "input" type="text" />
+                    <input className= "input" type="text" value={lot.lot_timeIn}/>
                 </div>
                 <div className='div'>
                     <label className='label'><b>HORA SALIDA:</b></label>
-                    <input className= "input" type="text" />
+                    <input className= "input" type="text" value={lot.lot_timeOut}/>
                 </div>
                 <div className='div'>
                     <label className='label'><b>TIEMPO TOTAL:</b></label>
