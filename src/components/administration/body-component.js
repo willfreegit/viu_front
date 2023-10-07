@@ -4,9 +4,10 @@ import './administration.css';
 const BodyComponent = ({ lot }) => {
     console.log("lot_register:");
     console.log(lot.lot_register);
-     const[register, setRegister] = useState(lot.lot_register);
+    const[register, setRegister] = useState(lot.lot_register);
 
      const changeRegister = (e)=>{
+        setRegister(e.target.value);
         lot.lot_register = e.target.value;
      }
 
@@ -26,13 +27,7 @@ console.log(lot);
                 </div>
                 <div className='div'>
                     <label className='label'><b>PLACA:</b></label>
-                    <input className= "input" type="text" value={register} onChange={changeRegister}
-                    onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                    }}
-                    />
+                    <input className= "input" value={lot.lot_register} onChange={changeRegister}/>
                 </div>
                 <div className='div'>
                     <label className='label'><b>HORA ENTRADA:</b></label>

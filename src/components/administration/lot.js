@@ -21,14 +21,13 @@ const Lot = ({ lot, lots, updateLot }) => {
             lot.lot_style = "CLICKED";
             setStyle("CLICKED");
         }
-        console.log(lots);
         updateLot();
         //forceUpdate();
     }
 
     return (
         <div className="squares">
-            <div className={style}
+            <div className={lot.lot_style}
                 onClick={changeStyle}
             >
                 <p>
