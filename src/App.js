@@ -3,6 +3,7 @@ import './App.css';
 import MainComponent from './components/log-in/main-page';
 import { BrowserRouter } from 'react-router-dom';
 import Administration from "../src/components/administration/administration-component";
+import Configuration from "../src/components/configuration/configuration-component";
 import Login from "../src/components/log-in/log-in-component"
 import Home from "../src/components/home/home-component"
 
@@ -17,6 +18,7 @@ function App() {
       <BrowserRouter>
       <Routes>
             <Route path="/administrator" element={<Administration />}/>
+            <Route path="/configuration" element={<Configuration />}/>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
       </Routes>

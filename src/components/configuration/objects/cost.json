@@ -1,0 +1,13 @@
+[
+    {
+      "tar_code":1,
+      "tar_type":"AUTOMOVIL",
+      "tar_cost":0.05 
+    },
+    {
+        "tar_code":2,
+        "tar_type":"MOTO",
+        "tar_cost":0.03
+    }
+
+]

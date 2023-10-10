@@ -65,7 +65,8 @@ export default function LogInComponent() {
 
 
   return (
-    <div className="app">
+    <div className="body2">
+      <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
         <div className="form">
@@ -89,6 +90,8 @@ export default function LogInComponent() {
         </div>
       </div>
     </div>
+    </div>
+    
   );
 }
 

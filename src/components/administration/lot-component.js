@@ -4,11 +4,6 @@ import Lot from './lot';
 
 const LotComponent = ({ arrayVertical, lots, updateLot }) => {
 
-  
-
-  console.log("array vertical");
-  console.log(arrayVertical);
-
   const columns = [
     { path: "0" },
     { path: "1" },

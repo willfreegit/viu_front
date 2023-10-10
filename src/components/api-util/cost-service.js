@@ -10,11 +10,9 @@ const GetCosts = () => {
           return response.json();
        })
        .then((data) => {
-          console.log(data);
           setCosts(data);
        })
        .catch((err) => {
-          console.log(err.message);
        });
        return(
         costs

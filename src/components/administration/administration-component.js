@@ -3,7 +3,7 @@ import HeaderComponent from './header-component';
 import BodyComponent from './body-component';
 import LotComponent from './lot-component';
 import LotJSON from './objects/lot.json';
-
+import './administration.css'
 
 const empty = {
   lot_code:"", 
