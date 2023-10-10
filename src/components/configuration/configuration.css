@@ -167,12 +167,12 @@ body {
 .div4 {
     margin-bottom: 10px;
     align-content: center;
-    padding-left: 180px;
+    padding-left: 200px;
 }
 .div42 {
     margin-bottom: 10px;
     align-content: center;
-    padding-left: 176px;
+    padding-left: 196px;
 }
 
 .label2 {
@@ -188,7 +188,21 @@ body {
 }
 
 .input2 {
-    width: 80px;
+    width: 120px;
+    border-radius: 8px;
+    outline: 2px solid #615121;
+    border: 0;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-family: Digital-7, 'sans-serif';
+    background-color: #e2e2e2;
+    outline-offset: 3px;
+    padding: 5px 1rem;
+    transition: 0.25s;
+}
+
+.select2 {
+    width: 155px;
     border-radius: 8px;
     outline: 2px solid #615121;
     border: 0;
@@ -214,7 +228,7 @@ body {
 }
 
 .input3 {
-    width: 180px;
+    width: 250px;
     border-radius: 8px;
     outline: 2px solid #615121;
     border: 0;
@@ -232,7 +246,6 @@ body {
     font-size: 15px;
     margin-left: 10px;
     padding: 0.7em 2.7em;
-    ;
     letter-spacing: 0.06em;
     position: relative;
     font-family: Digital-7, 'sans-serif';

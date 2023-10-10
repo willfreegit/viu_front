@@ -17,12 +17,29 @@ const empty = {
 }
 
 const ConfigurationComponent = () => {
-    const [lots, setLots] = useState(LotJSON);
+    const [lots, setLots] = useState([]);
     const [lot, setLot] = useState(empty);
+    const [selectedLotType, setSelectedLotType] = useState('AUTOMOVIL');
+    const [selectedLotState, setSelectedLotState] = useState('LIBRE');
+    const [selectedParkingState, setSelectedParkingState] = useState('ABIERTO');
 
     var arrayHorizontal = [];
     const arrayVertical = [];
 
+
+    //******************************UTIL COMPONENTS API *******************************/
+    useEffect(() => {
+        fetch('http://127.0.0.1:8080/api/v1/lot/getByParkingId/5')
+            .then(response => response.json())
+            .then(json => {
+                console.log('lots value:');
+                console.log(json);
+                setLots(json);
+            }
+            )
+            .catch(error => console.error(error));
+    }, []);
+    //*********************************************************************************/
 
     const updateLot = () => {
         for (var i = 0; i < lots.length; i++) {
@@ -49,6 +66,18 @@ const ConfigurationComponent = () => {
         counter++;
     }
 
+    const saveChangesLot = (e) => {
+        if ("save" === e.target.value) {
+            
+        }
+        if ("delete" === e.target.value) {
+
+        }
+        if ("cancel" === e.target.value) {
+
+        }
+    }
+
     return (
         <div className='body3'>
             <h4 className='title2'>CONFIGURACIÓN GENERAL</h4>
@@ -62,43 +91,51 @@ const ConfigurationComponent = () => {
                     <div className='div2'>
                         <label className='label2'><b>NOMBRE:</b></label>
                         <input className="input2" type="text" />
-                    </div>
-                    <div className='div2'>
+                        <br></br>
                         <label className='label2'><b>TIPO:</b></label>
-                        <input className="input2" />
-                    </div>
-                    <div className='div2'>
+                        <select className="select2" value={selectedLotType} onChange={e=> setSelectedLotType(e.target.value)}>
+                            <option value="AUTOMOVIL">AUTOMOVIL</option>
+                            <option value="MOTOCICLETA">MOTOCICLETA</option>
+                        </select>
+                        <br></br>
                         <label className='label2'><b>ESTADO:</b></label>
-                        <input className="input2" />
+                        <select className="select2" value={selectedLotState} onChange={e=> setSelectedLotState(e.target.value)}>
+                            <option value="LIBRE">LIBRE</option>
+                            <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                        </select>
+                        
                     </div>
                     <br></br><br></br>
                     <div className='div3'>
-                        <button className='button2' value="input" >GUARDAR</button>
+                        <button className='button2' value="save" onClick={saveChangesLot} >GUARDAR</button>
                     </div>
                     <div className='div3'>
-                        <button className='button2' value="input" >ELIMINAR</button>
+                        <button className='button2' value="delete" onClick={saveChangesLot} >ELIMINAR</button>
                     </div>
                     <div className='div32'>
-                        <button className='button2' value="input" >CANCELAR</button>
+                        <button className='button2' value="cancel" onClick={saveChangesLot} >CANCELAR</button>
                     </div>
                 </div>
             </div>
             <div className='right2'>
                 <div className='div2'>
                     <label className='label3'><b>NOMBRE DEL PARQUEADERO:</b></label>
-                    <input className="input3" />
+                    <input className="input3" /><br></br>
                     <label className='label3'><b>ESTADO:</b></label>
-                    <input className="input3" />
+                    <select className="select2" value={selectedParkingState} onChange={e=> setSelectedParkingState(e.target.value)}>
+                            <option value="ABIERTO">ABIERTO</option>
+                            <option value="CERRADO">CERRADO</option>
+                        </select><br></br>
                     <label className='label3'><b>DIRECCIÓN:</b></label>
-                    <input className="input3" />
+                    <input className="input3" /><br></br>
                     <label className='label3'><b>LATITUD:</b></label>
-                    <input className="input3" />
+                    <input className="input2" /><br></br>
                     <label className='label3'><b>LONGITUD:</b></label>
-                    <input className="input3" />
+                    <input className="input2" /><br></br>
                     <label className='label3'><b>PRECIO POR MINUTO:</b></label>
-                    <input className="input3" />
+                    <input className="input2" /><br></br>
                     <label className='label3'><b>HORARIO DE LUNES A VIERNES:</b></label>
-                    <input className="input3" />
+                    <input className="input3" /><br></br>
                     <label className='label3'><b>HORARIO DE FINES DE SEMANA:</b></label>
                     <input className="input3" />
                     <br></br>

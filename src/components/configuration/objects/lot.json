@@ -1,7 +1,8 @@
 [
     { 
-        "lot_id":"A1", 
-        "lot_type":"AUTOMOVIL", 
+        "lot_code":"",
+        "lot_id":"", 
+        "lot_type":"", 
         "lot_register":"", 
         "lot_timeIn": null, 
         "lot_timeOut":null, 
