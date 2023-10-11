@@ -30,10 +30,10 @@ const Lot = ({ lot, lots, updateLot }) => {
             <div className={lot.lot_style}
                 onClick={changeStyle}
             >
-                <p>
+                <div>
                     <img src={`${process.env.PUBLIC_URL + "/figures/" + lot.lot_type + '.png'}`} width="26" height="18" /><figcaption>{lot.lot_id}</figcaption>
                     <div style={{ color: 'yellow' }}>{lot.lot_register}</div>
-                </p>
+                </div>
             </div>
         </div>
     )
