@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './administration.css';
-import GetCosts from '../api-util/cost-service';
 
 const BodyComponent = ({ lot }) => {
     console.log("lot =================>");
@@ -82,8 +81,11 @@ const BodyComponent = ({ lot }) => {
 
     return (
         <div className='div'>
-            <p className='title'>PARQUEADERO LA LIBERTAD</p>
             <div>
+            <p className='title1'>PARQUEADERO LA LIBERTAD</p>
+            </div>
+            <br></br>
+            <div className='centered'>
                 <div className='div'>
                     <label className='label'><b>LOTE:</b></label>
                     <input className="input" type="text" value={lot.lot_id} />

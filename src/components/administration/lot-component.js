@@ -58,6 +58,8 @@ const LotComponent = ({ arrayVertical, lots, updateLot }) => {
   //***************************************/
   return (
     <>
+    <br></br>
+    <br></br>
       <div id="clockdate">
         <div className="clockdate-wrapper">
           <div id="clock"></div>

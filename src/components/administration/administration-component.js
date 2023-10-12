@@ -4,6 +4,7 @@ import BodyComponent from './body-component';
 import LotComponent from './lot-component';
 import LotJSON from './objects/lot.json';
 import './administration.css'
+import ResponsiveAppBar from '../responsive-app-bar';
 
 const empty = {
   lot_code:"", 
@@ -51,6 +52,7 @@ const AdministrationComponent = () => {
 
   return (
     <>
+    <ResponsiveAppBar></ResponsiveAppBar>
       <div className="split left">
         <div className='centered'>
           <LotComponent arrayVertical={arrayVertical} lots={lots} updateLot={updateLot}></LotComponent>
