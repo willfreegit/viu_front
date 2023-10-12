@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import './administration.css';
 
+const emptyContract = { 
+    con_code: "",
+    con_state: "",
+    con_register:"", 
+    con_timeIn: null, 
+    con_timeOut:null, 
+    con_timeTotal:0, 
+    con_price:0,
+    con_total:0,
+    lot:{
+        lot_code: ""
+    }
+  }
+
 const BodyComponent = ({ lot }) => {
     console.log("lot =================>");
     console.log(lot);
-    const [timeInit, setTimeInit] = useState(lot.lot_timeIn ? lot.lot_timeIn : new Date);
+    const [contract, setContract] = useState(emptyContract);
+    const [timeInit, setTimeInit] = useState(contract.con_timeIn ? contract.con_timeIn : new Date);
     const [timeFinal, setTimeFinal] = useState(new Date);
     const [totalTime, setTotalTime] = useState(Math.round(Math.abs(timeFinal.getTime() - timeInit.getTime()) / 60));
     const [timeInitString, setTimeInitString] = useState(getDateInString(timeInit));
     const [timeFinalString, setTimeFinalString] = useState(getDateInString(timeFinal));
-    const [register, setRegister] = useState(lot.lot_register);
+    const [register, setRegister] = useState(contract.con_register);
     const [costs, setCosts] = useState([]);
     const [cost, setCost] = useState(0);
     const [pay, setPay] = useState(cost * totalTime);
@@ -40,7 +55,7 @@ const BodyComponent = ({ lot }) => {
     );
 
     function calculateValues() {
-        setTimeInit(lot.lot_timeIn ? lot.lot_timeIn : new Date);
+        setTimeInit(contract.con_timeIn ? contract.con_timeIn : new Date);
         setTimeFinal(new Date());
         setTotalTime(Math.round(Math.abs(timeFinal.getTime() - timeInit.getTime()) / 60000));
         setPay(roundToTwo(cost * totalTime));
@@ -58,21 +73,21 @@ const BodyComponent = ({ lot }) => {
 
     const changeRegister = (e) => {
         setRegister(e.target.value);
-        lot.lot_register = e.target.value;
+        contract.con_register = e.target.value;
     }
 
     const changeTimeIn = (e) => {
-        lot.lot_timeIn = e.target.value;
+        contract.con_timeIn = e.target.value;
     }
 
     const changeTimeOut = (e) => {
-        lot.lot_timeOut = e.target.value;
+        contract.con_timeOut = e.target.value;
     }
 
     const saveChanges = (e) => {
         if ("input" === e.target.value) {
-            lot.lot_register = register;
-            lot.lot_timeIn = timeInit;
+            contract.con_register = register;
+            contract.con_timeIn = timeInit;
         }
         if ("output" === e.target.value) {
 
@@ -96,7 +111,7 @@ const BodyComponent = ({ lot }) => {
                 </div>
                 <div className='div'>
                     <label className='label'><b>PLACA:</b></label>
-                    <input className="input" value={lot.lot_register} onChange={changeRegister} />
+                    <input className="input" value={contract.con_register} onChange={changeRegister} />
                 </div>
                 <div className='div'>
                     <label className='label'><b>HORA ENTRADA:</b></label>

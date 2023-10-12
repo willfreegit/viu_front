@@ -1,25 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TableComponent from './table-component';
-import Lot from './lot';
 
 const LotComponent = ({ arrayVertical, lots, updateLot }) => {
-
-  const columns = [
-    { path: "0" },
-    { path: "1" },
-    { path: "2" },
-    { path: "3" },
-    { path: "4" },
-    { path: "5" },
-    { path: "6" },
-  ];
-
-  const data = [
-
-     <Lot></Lot> , <Lot></Lot>, <Lot></Lot>  
-    /*{ A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot> },
-    { A: <Lot></Lot>, B: <Lot></Lot>, C: <Lot></Lot> }*/
-  ];
 
   //***************************************/
   function startTime() {

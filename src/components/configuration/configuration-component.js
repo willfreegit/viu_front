@@ -3,8 +3,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TableComponent from './table-component';
 import './configuration.css'
+import ResponsiveAppBar from '../responsive-app-bar';
 
-const empty = {
+const emptyLot = {
+    lot_code: "",
     lot_id: "",
     lot_code: "",
     lot_type: "",
@@ -18,7 +20,7 @@ const empty = {
 
 const ConfigurationComponent = () => {
     const [lots, setLots] = useState([]);
-    const [lot, setLot] = useState(empty);
+    const [lot, setLot] = useState(emptyLot);
     const [id, setId] = useState(lot.lot_id);
     const [dataTable, setDataTable] = useState([]);
     const [selectedLotType, setSelectedLotType] = useState('AUTOMOVIL');
@@ -26,7 +28,7 @@ const ConfigurationComponent = () => {
     const [selectedParkingState, setSelectedParkingState] = useState('ABIERTO');
 
     const updateLot = () => {
-        setLot(empty);
+        setLot(emptyLot);
         for (var i = 0; i < lots.length; i++) {
             if (lots[i].lot_clicked === "SI") {
                 setLot(lots[i]);
@@ -67,12 +69,12 @@ const ConfigurationComponent = () => {
     //******************************UTIL COMPONENTS API *******************************/
     useEffect(() => {
         apiQuery();
-        
+
     }, []);
 
     useEffect(() => {
         fullTable();
-     }, [lots]);
+    }, [lots]);
 
     const apiMaintenaince = (e) => {
         e.preventDefault();
@@ -98,12 +100,12 @@ const ConfigurationComponent = () => {
         fetch('http://127.0.0.1:8080/api/v1/lot/getByParkingId/5')
             .then(response => response.json())
             .then(json => {
-                setLots(json); 
+                setLots(json);
             }
             )
             .catch(error => console.error(error));
     }
- 
+
     const fullTable = () => {
         var counter = 0;
         const arrayVertical = [];
@@ -111,11 +113,11 @@ const ConfigurationComponent = () => {
         setDataTable([]);
         console.log("tamano:" + lots.length);
         for (var i = 0; i < lots.length; i++) {
-            if (counter == 5 || (i === (lots.length - 1))) {
+            if (counter == 4 || (i === (lots.length - 1))) {
                 counter = 0;
                 arrayVertical.push(arrayHorizontal);
                 arrayHorizontal = [];
-            } else { 
+            } else {
                 arrayHorizontal.push(lots[i]);
                 counter++;
             }
@@ -126,6 +128,7 @@ const ConfigurationComponent = () => {
 
     return (
         <div className='body3'>
+            <ResponsiveAppBar></ResponsiveAppBar>
             <h4 className='title2'>CONFIGURACIÓN GENERAL</h4>
             <div className='left2'>
                 <div className='left3'>
