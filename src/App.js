@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Administration from "../src/components/administration/administration-component";
 import Configuration from "../src/components/configuration/configuration-component";
 import Login from "../src/components/log-in/log-in-component"
+import SignIn from "../src/components/sign-in/sign-in-component"
 import Home from "../src/components/home/home-component"
 
 import {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/administrator" element={<Administration />}/>
             <Route path="/configuration" element={<Configuration />}/>
             <Route path="/login" element={<Login />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/" element={<Home />} />
       </Routes>
       </BrowserRouter>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './log-in.css';
 import {
   BrowserRouter as Router, Switch, Routes,
-  Route, Redirect, useNavigate
+  Route, Redirect, useNavigate, Link
 } from "react-router-dom";
 
 
@@ -65,33 +65,51 @@ export default function LogInComponent() {
 
 
   return (
-    <div className="body2">
+    <div>
       <div className="app">
-      <div className="login-form">
-        <div className="title">Sign In</div>
-        <div className="form">
-          <form onSubmit={handleSubmit}>
-            <div className="input-container">
-              <label>Username </label>
-              <input type="text" name="uname" required />
-              {renderErrorMessage("uname")}
-            </div>
-            <div className="input-container">
-              <label>Password </label>
-              <input type="password" name="pass" required />
-              {renderErrorMessage("pass")}
-            </div>
-            <div className="button-container">
-              <input type="submit" />
-            </div>
-          </form>
+        <div className="sigin-form">
+          <div className="mySignInStyle">
+            <div className="title2">INGRESAR AL SISTEMA</div>
+            <br></br>
+            <div>
+              <form onSubmit={handleSubmit}>
 
-          
+                <label style = {{fontSize:"14px"}}>Nombre de usuario </label>
+                <input type="text" name="uname" required />
+                {renderErrorMessage("uname")}
+
+                <br></br>
+                <label style = {{fontSize:"14px"}}>Password </label>
+                <input type="password" name="pass" required />
+                {renderErrorMessage("pass")}
+
+                <br></br>
+                <div>
+                  <div style={{width: "30%", float:"left"}}>
+                  <button className="button3">Ingresar</button>
+                  </div>
+
+                  <div style={{width: "70%", float:"right"}}>
+                  <button className="button3">Cancelar</button>
+                  </div>
+                  
+                  
+                </div>
+                <div  style={{marginTop:"4em"}}>
+                  
+                <Link>Registrate</Link>
+                  </div>                
+                
+              </form>
+
+
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
-    </div>
-    
+
   );
 }
 
