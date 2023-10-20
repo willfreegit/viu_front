@@ -7,6 +7,7 @@ import Configuration from "../src/components/configuration/configuration-compone
 import Login from "../src/components/log-in/log-in-component"
 import SignIn from "../src/components/sign-in/sign-in-component"
 import Home from "../src/components/home/home-component"
+import { AuthProvider } from './components/util/AuthContext';
 
 import {
   BrowserRouter as Router, Switch, Routes,
@@ -15,16 +16,27 @@ import {
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
+      <div className="App">
       <BrowserRouter>
       <Routes>
             <Route path="/administrator" element={<Administration />}/>
             <Route path="/configuration" element={<Configuration />}/>
-            <Route path="/login" element={<Login />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
+            <Route path="*" element={<PageNotFound  />} />
       </Routes>
       </BrowserRouter>
+    </div>
+    </AuthProvider>
+    
+  );
+}
+
+function PageNotFound() {
+  return (
+    <div>
+        <p>404 Page not found</p>
     </div>
   );
 }

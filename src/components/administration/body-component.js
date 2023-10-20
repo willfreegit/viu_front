@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './administration.css';
+import { useAuth } from "../util/AuthContext"
 
 const emptyContract = { 
-    con_code: "",
-    con_state: "",
-    con_register:"", 
-    con_timeIn: null, 
-    con_timeOut:null, 
-    con_timeTotal:0, 
-    con_price:0,
-    con_total:0,
+    id_contract: "",
+    state: "",
+    register:"", 
+    time_in: null, 
+    time_out:null, 
+    time_total:0, 
+    price:0,
+    total:0,
     lot:{
-        lot_code: ""
+        id_lot: ""
     }
   }
 
@@ -19,25 +20,33 @@ const BodyComponent = ({ lot }) => {
     console.log("lot =================>");
     console.log(lot);
     const [contract, setContract] = useState(emptyContract);
-    const [timeInit, setTimeInit] = useState(contract.con_timeIn ? contract.con_timeIn : new Date);
+    const [timeInit, setTimeInit] = useState(contract.time_in ? contract.time_in : new Date);
     const [timeFinal, setTimeFinal] = useState(new Date);
     const [totalTime, setTotalTime] = useState(Math.round(Math.abs(timeFinal.getTime() - timeInit.getTime()) / 60));
     const [timeInitString, setTimeInitString] = useState(getDateInString(timeInit));
     const [timeFinalString, setTimeFinalString] = useState(getDateInString(timeFinal));
-    const [register, setRegister] = useState(contract.con_register);
+    const [register, setRegister] = useState(contract.register);
     const [costs, setCosts] = useState([]);
     const [cost, setCost] = useState(0);
     const [pay, setPay] = useState(cost * totalTime);
+    const Auth = useAuth();
 
     useEffect(() => {
         calculateValues();
-        fetch('http://127.0.0.1:8080/api/v1/cost/getByParkingId/5')
+        fetch('http://127.0.0.1:8080/api/v1/cost/getByParkingId/5', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            }
+        })
             .then(response => response.json())
             .then(json => {
                 setCosts(json);
                 costs.map((value) => {
-                    if (value.tar_type === lot.lot_type) {
-                        setCost(value.tar_cost)
+                    if (value.type === lot.type) {
+                        setCost(value.cost)
                     }
                 }
                 )
@@ -55,7 +64,7 @@ const BodyComponent = ({ lot }) => {
     );
 
     function calculateValues() {
-        setTimeInit(contract.con_timeIn ? contract.con_timeIn : new Date);
+        setTimeInit(contract.time_in ? contract.time_in : new Date);
         setTimeFinal(new Date());
         setTotalTime(Math.round(Math.abs(timeFinal.getTime() - timeInit.getTime()) / 60000));
         setPay(roundToTwo(cost * totalTime));
@@ -73,21 +82,21 @@ const BodyComponent = ({ lot }) => {
 
     const changeRegister = (e) => {
         setRegister(e.target.value);
-        contract.con_register = e.target.value;
+        contract.register = e.target.value;
     }
 
     const changeTimeIn = (e) => {
-        contract.con_timeIn = e.target.value;
+        contract.time_in = e.target.value;
     }
 
     const changeTimeOut = (e) => {
-        contract.con_timeOut = e.target.value;
+        contract.time_out = e.target.value;
     }
 
     const saveChanges = (e) => {
         if ("input" === e.target.value) {
-            contract.con_register = register;
-            contract.con_timeIn = timeInit;
+            contract.register = register;
+            contract.time_in = timeInit;
         }
         if ("output" === e.target.value) {
 
@@ -103,15 +112,15 @@ const BodyComponent = ({ lot }) => {
             <div className='centered'>
                 <div className='div'>
                     <label className='label'><b>LOTE:</b></label>
-                    <input className="input" type="text" value={lot.lot_id} />
+                    <input className="input" type="text" value={lot.code} />
                 </div>
                 <div className='div'>
                     <label className='label'><b>TIPO:</b></label>
-                    <input className="input" type="text" value={lot.lot_type} />
+                    <input className="input" type="text" value={lot.type} />
                 </div>
                 <div className='div'>
                     <label className='label'><b>PLACA:</b></label>
-                    <input className="input" value={contract.con_register} onChange={changeRegister} />
+                    <input className="input" value={contract.register} onChange={changeRegister} />
                 </div>
                 <div className='div'>
                     <label className='label'><b>HORA ENTRADA:</b></label>

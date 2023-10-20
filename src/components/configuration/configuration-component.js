@@ -4,48 +4,148 @@ import 'react-toastify/dist/ReactToastify.css';
 import TableComponent from './table-component';
 import './configuration.css'
 import ResponsiveAppBar from '../responsive-app-bar';
+import { useAuth } from "../util/AuthContext"
 
 const emptyLot = {
-    lot_code: "",
-    lot_id: "",
-    lot_code: "",
-    lot_type: "",
-    lot_state: "",
-    lot_clicked: "NO",
-    lot_style: "",
+    code: "",
+    id_lot: "",
+    type: "",
+    state: "",
+    clicked: "NO",
+    style: "",
     parking: {
-        par_code: 5
+        id_parking: 5
     }
 }
 
+const test = [
+    {
+        code: "A1",
+        register: "",
+        id_lot: "",
+        type: "AUTOMOVIL",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+    {
+        code: "A2",
+        register: "",
+        id_lot: "",
+        type: "AUTOMOVIL",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+    {
+        code: "A3",
+        register: "",
+        id_lot: "",
+        type: "AUTOMOVIL",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+    {
+        code: "A4",
+        register: "",
+        id_lot: "",
+        type: "MOTOCICLETA",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+    {
+        code: "A5",
+        register: "",
+        id_lot: "",
+        type: "MOTOCICLETA",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+    {
+        code: "A6",
+        id_lot: "",
+        register: "",
+        type: "MOTOCICLETA",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+    {
+        code: "A7",
+        id_lot: "",
+        register: "",
+        type: "MOTOCICLETA",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+    {
+        code: "A8",
+        id_lot: "",
+        register: "",
+        type: "AUTOMOVIL",
+        state: "LIBRE",
+        clicked: "NO",
+        style: "LIBRE",
+        parking: {
+            id_parking: 5
+        }
+    },
+]
+
 const ConfigurationComponent = () => {
-    const [lots, setLots] = useState([]);
+    const [lots, setLots] = useState(test);
     const [lot, setLot] = useState(emptyLot);
-    const [id, setId] = useState(lot.lot_id);
+    const [id, setId] = useState(lot.code);
     const [dataTable, setDataTable] = useState([]);
     const [selectedLotType, setSelectedLotType] = useState('AUTOMOVIL');
     const [selectedLotState, setSelectedLotState] = useState('LIBRE');
     const [selectedParkingState, setSelectedParkingState] = useState('ABIERTO');
+    const Auth = useAuth();
 
     const updateLot = () => {
         setLot(emptyLot);
         for (var i = 0; i < lots.length; i++) {
-            if (lots[i].lot_clicked === "SI") {
+            if (lots[i].clicked === "SI") {
                 setLot(lots[i]);
-                setId(lots[i].lot_id);
+                setId(lots[i].code);
             }
         }
     }
 
     const onChangeLotName = (e) => {
         setId(e.target.value);
-        lot.lot_id = e.target.value;
+        lot.code = e.target.value;
     }
 
     const saveChangesLot = (e) => {
         if ("add" === e.target.value) {
             for (var i = 0; i < lots.length; i++) {
-                if (lots[i].lot_id === id) {
+                if (lots[i].code === id) {
                     toast.error("No puede agregar dos lotes con el mismo nombre", {
                         position: toast.POSITION.TOP_CENTER,
                         autoClose: 20000
@@ -53,9 +153,9 @@ const ConfigurationComponent = () => {
                     return;
                 }
             }
-            lot.lot_state = selectedLotState;
-            lot.lot_type = selectedLotType;
-            lot.lot_style = selectedLotState;
+            lot.state = selectedLotState;
+            lot.type = selectedLotType;
+            lot.style = selectedLotState;
             apiMaintenaince(e);
         }
         if ("delete" === e.target.value) {
@@ -69,7 +169,6 @@ const ConfigurationComponent = () => {
     //******************************UTIL COMPONENTS API *******************************/
     useEffect(() => {
         apiQuery();
-
     }, []);
 
     useEffect(() => {
@@ -83,6 +182,7 @@ const ConfigurationComponent = () => {
             body: JSON.stringify(lot),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer' + Auth.getToken()
             },
         })
             .then((res) => res.json())
@@ -97,7 +197,16 @@ const ConfigurationComponent = () => {
 
     const apiQuery = () => {
         console.log("use effect se ejecuta...");
-        fetch('http://127.0.0.1:8080/api/v1/lot/getByParkingId/5')
+        fetch('http://127.0.0.1:8080/api/v1/lot/getByParkingId/5', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            }
+        }
+
+        )
             .then(response => response.json())
             .then(json => {
                 setLots(json);
@@ -139,7 +248,7 @@ const ConfigurationComponent = () => {
                 <div className='right3'>
                     <div className='div2'>
                         <label className='label2'><b>NOMBRE:</b></label>
-                        <input className="input2" value={lot.lot_id} onChange={onChangeLotName} />
+                        <input className="input2" value={lot.code} onChange={onChangeLotName} />
                         <br></br>
                         <label className='label2'><b>TIPO:</b></label>
                         <select className="select2" value={selectedLotType} onChange={e => setSelectedLotType(e.target.value)}>

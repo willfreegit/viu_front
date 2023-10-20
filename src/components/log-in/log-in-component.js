@@ -1,17 +1,58 @@
 import React, { useState } from "react";
 import './log-in.css';
+import { useAuth } from "../util/AuthContext"
+import { orderApi } from '../util/OrderApi'
+import { parseJwt, handleLogError } from '../util/Helpers'
+import { ToastContainer, toast } from 'react-toastify';
+
 import {
   BrowserRouter as Router, Switch, Routes,
   Route, Redirect, useNavigate, Link
 } from "react-router-dom";
 
-
 export default function LogInComponent() {
-
-  const [errorMessages, setErrorMessages] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
+  const Auth = useAuth();
+  const isLoggedIn = Auth.userIsAuthenticated();
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleUserName = (e) => {
+    setUserName(e.target.value)
+  }
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!(userName && password)) {
+      errorMessage();
+      return
+    }
+    try {
+      const response = await orderApi.authenticate(userName, password)
+      const { accessToken } = response.data
+      const data = parseJwt(accessToken)
+      const authenticatedUser = { data, accessToken }
+      Auth.userLogin(authenticatedUser)
+      Auth.userToken(accessToken);
+      setUserName('')
+      setPassword('')
+      navigate('/administrator');
+    } catch (error) {
+      handleLogError(error)
+      errorMessage();
+    }
+  }
+
+  const errorMessage = () => {
+    toast.error("!CREDENCIALES INCORRECTAS!", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      autoClose: 20000
+    });
+  }
 
   // User Login info
   const database = [
@@ -25,45 +66,6 @@ export default function LogInComponent() {
     }
   ];
 
-  const errors = {
-    uname: "invalid username",
-    pass: "invalid password"
-  };
-
-
-  const handleSubmit = (event) => {
-    //Prevent page reload
-    event.preventDefault();
-
-    var { uname, pass } = document.forms[0];
-
-    // Find user login info
-    const userData = database.find((user) => user.username === uname.value);
-
-
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-        navigate('/administrator');
-      }
-    } else {
-      // Username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
-    }
-  };
-
-
-  // Generate JSX code for error message
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
-
-
   return (
     <div>
       <div className="app">
@@ -73,40 +75,25 @@ export default function LogInComponent() {
             <br></br>
             <div>
               <form onSubmit={handleSubmit}>
-
-                <label style = {{fontSize:"14px"}}>Nombre de usuario </label>
-                <input type="text" name="uname" required />
-                {renderErrorMessage("uname")}
-
+                <label style={{ fontSize: "14px" }}>Nombre de usuario </label>
+                <input type="text" name="userName" value={userName} onChange={handleUserName} required />
                 <br></br>
-                <label style = {{fontSize:"14px"}}>Password </label>
-                <input type="password" name="pass" required />
-                {renderErrorMessage("pass")}
-
+                <label style={{ fontSize: "14px" }}>Password </label>
+                <input type="password" name="password" value={password} onChange={handlePassword} required />
                 <br></br>
                 <div>
-                  <div style={{width: "30%", float:"left"}}>
-                  <button className="button3">Ingresar</button>
+                  <div style={{ width: "30%", float: "left" }}>
+                    <button className="button3" onClick={handleSubmit}>Ingresar</button>
                   </div>
-
-                  <div style={{width: "70%", float:"right"}}>
-                  <button className="button3">Cancelar</button>
+                  <div style={{ width: "70%", float: "right" }}>
+                    <button className="button3">Cancelar</button>
                   </div>
-                  
-                  
                 </div>
-                <div  style={{marginTop:"4em"}}>
-                  
-                <Link>Registrate</Link>
-                  </div>                
-                
+                <ToastContainer />
               </form>
-
-
             </div>
           </div>
         </div>
-
       </div>
     </div>
 

@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
 
-const pages = ['Administración', 'Configuración'];
+const pages = ['Administración', 'Configuración', 'Usuarios'];
 const settings = ['Ver Perfil', 'Configuración Cuenta', 'Salir'];
 
 function ResponsiveAppBar() {
@@ -36,7 +36,7 @@ function ResponsiveAppBar() {
 
   const openNewPage = (page) => {
     console.log(page);
-    let path = page === 'Administración' ? `/administrator` : `/configuration`;
+    let path = page === 'Administración' ? `/administrator` : (page === 'Configuración' ? `/configuration` :  `/signin`);
     navigate(path);
     setAnchorElNav(null);
   };

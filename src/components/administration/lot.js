@@ -3,22 +3,22 @@ import TableComponent from './table-component';
 import './administration.css'
 
 const Lot = ({ lot, lots, updateLot }) => {
-    const[style, setStyle] = useState(lot.lot_style);
+    const[style, setStyle] = useState(lot.style);
     //const [_, forceUpdate] = useReducer(x => x + 1, 0);
 
     const changeStyle = () => {
-        if (lot.lot_clicked === "SI") {
-            lot.lot_clicked = "NO";
-            lot.lot_style = lot.lot_state;
-            setStyle(lot.lot_state);
+        if (lot.clicked === "SI") {
+            lot.clicked = "NO";
+            lot.style = lot.state;
+            setStyle(lot.state);
         } else {
             lots.map((item) => {
-                item.lot_clicked = "NO";
-                item.lot_style = item.lot_state;
+                item.clicked = "NO";
+                item.style = item.state;
             }
             );
-            lot.lot_clicked = "SI";
-            lot.lot_style = "CLICKED";
+            lot.clicked = "SI";
+            lot.style = "CLICKED";
             setStyle("CLICKED");
         }
         updateLot();
@@ -27,12 +27,12 @@ const Lot = ({ lot, lots, updateLot }) => {
 
     return (
         <div className="squares">
-            <div className={lot.lot_style}
+            <div className={lot.style}
                 onClick={changeStyle}
             >
                 <div>
-                    <img src={`${process.env.PUBLIC_URL + "/figures/" + lot.lot_type + '.png'}`} width="26" height="18" /><figcaption>{lot.lot_id}</figcaption>
-                    <div style={{ color: 'yellow' }}>{lot.lot_register}</div>
+                    <img src={`${process.env.PUBLIC_URL + "/figures/" + lot.type + '.png'}`} width="26" height="18" /><figcaption>{lot.code}</figcaption>
+                    <div style={{ color: 'yellow' }}>{lot.register}</div>
                 </div>
             </div>
         </div>
