@@ -375,6 +375,7 @@ const ConfigurationComponent = () => {
         }
         
     }
+    
 
     const updateParking = () =>{
         fetch('http://127.0.0.1:8080/api/v1/parking/update/1', {

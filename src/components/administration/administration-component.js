@@ -37,6 +37,7 @@ const AdministrationComponent = () => {
     }
 
     const updateList = () =>{
+        setLot(emptyLot);
         apiQuery();
     }
 
