@@ -5,7 +5,8 @@ import TableComponent from './table-component';
 import './configuration.css'
 import ResponsiveAppBar from '../responsive-app-bar';
 import { useAuth } from "../util/AuthContext"
-import ConfirmBox from "react-dialog-confirm";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const emptyLot = {
     code: "",
@@ -81,7 +82,9 @@ const ConfigurationComponent = () => {
                     return;
                 }
             }
-            lot.state = selectedLotState;
+            if(selectedLotState == 'MANTENIMIENTO'){
+                lot.state = selectedLotState;
+            }
             lot.type = selectedLotType;
             lot.style = selectedLotState;
             apiMaintenaince(e);
@@ -269,6 +272,130 @@ const ConfigurationComponent = () => {
         setSelectedLotTypeCost(e.target.value)
     }
 
+    const modificarParking = () =>{
+        confirmAlert({
+            title: 'Modificar Parqueadero',
+            message: '¿Está seguro de continuar?',
+            buttons: [
+              {
+                label: 'SI',
+                onClick: () => updateParking()
+              },
+              {
+                label: 'NO',
+                
+              }
+            ]
+          });
+    }
+
+    const eliminarLote = () =>{
+        confirmAlert({
+            title: 'Eliminar Lote',
+            message: '¿Está seguro de continuar?',
+            buttons: [
+              {
+                label: 'SI',
+                onClick: () => deleteLote()
+              },
+              {
+                label: 'NO',
+                
+              }
+            ]
+          });
+    }
+
+    const modificarLote = () =>{
+        confirmAlert({
+            title: 'Modificar Lote',
+            message: '¿Está seguro de continuar?',
+            buttons: [
+              {
+                label: 'SI',
+                onClick: () => updateLote()
+              },
+              {
+                label: 'NO',
+                
+              }
+            ]
+          });
+    }
+
+    const deleteLote = () =>{
+        if(lot.state === "OCUPADO"){
+            toast.error("El lote esta actualmente ocupado por un vehiculo no se puede eliminar.", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 20000
+            });
+        } else{
+            fetch('http://127.0.0.1:8080/api/v1/parking/update/1', {
+                method: 'PUT',
+                body: JSON.stringify(parking),
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + Auth.getToken()
+                }
+            }
+            )
+                .then(response => response.json())
+                .then(json => {
+                    setParking(json);
+                }
+                )
+                .catch(error => console.error(error));
+        }
+        
+    }
+
+    const updateLote = () =>{
+        if(lot.state === "OCUPADO"){
+            toast.error("El lote esta actualmente ocupado por un vehiculo no se puede eliminar.", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 20000
+            });
+        } else{
+            fetch('http://127.0.0.1:8080/api/v1/parking/update/1', {
+            method: 'PUT',
+            body: JSON.stringify(parking),
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            }
+        }
+        )
+            .then(response => response.json())
+            .then(json => {
+                setParking(json);
+            }
+            )
+            .catch(error => console.error(error));
+        }
+        
+    }
+
+    const updateParking = () =>{
+        fetch('http://127.0.0.1:8080/api/v1/parking/update/1', {
+            method: 'PUT',
+            body: JSON.stringify(parking),
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            }
+        }
+        )
+            .then(response => response.json())
+            .then(json => {
+                setParking(json);
+            }
+            )
+            .catch(error => console.error(error));
+    }
+
     return (
         <div className='body3'>
             <ResponsiveAppBar></ResponsiveAppBar>
@@ -292,7 +419,7 @@ const ConfigurationComponent = () => {
                         <br></br>
                         <label className='label2'><b>ESTADO:</b></label>
                         <select className="select2" value={selectedLotState} onChange={e => setSelectedLotState(e.target.value)}>
-                            <option value="LIBRE">LIBRE</option>
+                            <option value="LIBRE">HABILITADO</option>
                             <option value="MANTENIMIENTO">MANTENIMIENTO</option>
                         </select>
 
@@ -302,10 +429,10 @@ const ConfigurationComponent = () => {
                         <button className='button2' value="add" onClick={saveChangesLot} >AGREGAR</button>
                     </div>
                     <div className='div3'>
-                        <button className='button2' value="delete" onClick={saveChangesLot} >ELIMINAR</button>
+                        <button className='button2' value="delete" onClick={eliminarLote} >ELIMINAR</button>
                     </div>
                     <div className='div32'>
-                        <button className='button2' value="edit" onClick={saveChangesLot} >MODIFICAR</button>
+                        <button className='button2' value="edit" onClick={modificarLote} >MODIFICAR</button>
                     </div>
                 </div>
             </div>
@@ -335,7 +462,7 @@ const ConfigurationComponent = () => {
                     <br></br>
                     <br></br>
                     <div className='div4'>
-                        <button className='button2' value="input" >MODIFICAR</button>
+                        <button className='button2' value="input" onClick={modificarParking}>MODIFICAR</button>
                     </div>
                 </div>
             </div>
