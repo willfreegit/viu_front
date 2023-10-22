@@ -34,6 +34,7 @@ export default function LogInComponent() {
     try {
       const response = await orderApi.authenticate(userName, password)
       const { accessToken } = response.data
+      console.log('accessToken: ' + accessToken);
       const data = parseJwt(accessToken)
       const authenticatedUser = { data, accessToken }
       Auth.userLogin(authenticatedUser)

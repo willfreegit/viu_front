@@ -330,9 +330,8 @@ const ConfigurationComponent = () => {
                 autoClose: 20000
             });
         } else{
-            fetch('http://127.0.0.1:8080/api/v1/parking/update/1', {
+            fetch('http://127.0.0.1:8080/api/v1/lot/delete/' + lot.id_lot, {
                 method: 'PUT',
-                body: JSON.stringify(parking),
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -357,9 +356,9 @@ const ConfigurationComponent = () => {
                 autoClose: 20000
             });
         } else{
-            fetch('http://127.0.0.1:8080/api/v1/parking/update/1', {
+            fetch('http://127.0.0.1:8080/api/v1/lot/update/' + lot.id_lot, {
             method: 'PUT',
-            body: JSON.stringify(parking),
+            body: JSON.stringify(lot),
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

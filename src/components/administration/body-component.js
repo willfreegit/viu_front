@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import './administration.css';
 import { useAuth } from "../util/AuthContext"
+import { ToastContainer, toast } from 'react-toastify';
 
 const emptyContract = { 
     id_contract: "",
@@ -16,22 +17,26 @@ const emptyContract = {
     }
   }
 
-const BodyComponent = ({ lot }) => {
+const BodyComponent = ({ lot, lots, updateList }) => {
     const [contract, setContract] = useState(emptyContract);
     const [timeInit, setTimeInit] = useState(contract.time_in ? contract.time_in : new Date);
     const [timeFinal, setTimeFinal] = useState(new Date);
     const [totalTime, setTotalTime] = useState(Math.round(Math.abs(timeFinal.getTime() - timeInit.getTime()) / 60));
     const [timeInitString, setTimeInitString] = useState(getDateInString(timeInit));
     const [timeFinalString, setTimeFinalString] = useState(getDateInString(timeFinal));
-    const [register, setRegister] = useState(contract.register);
+    const [register, setRegister] = useState(lot.contract_register);
     const [costs, setCosts] = useState([]);
     const [cost, setCost] = useState(0);
     const [pay, setPay] = useState(cost * totalTime);
+    const [saved, setSaved] = useState(false);
     const Auth = useAuth();
+
+
+    const [_, forceUpdate] = useReducer(x => x + 1, 0);
 
     useEffect(() => {
         calculateValues();
-        fetch('http://127.0.0.1:8080/api/v1/cost/getByParkingId/5', {
+        fetch('http://127.0.0.1:8080/api/v1/cost/getByParkingId/1', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -80,6 +85,7 @@ const BodyComponent = ({ lot }) => {
 
     const changeRegister = (e) => {
         setRegister(e.target.value);
+        lot.contract_register = e.target.value;
         contract.register = e.target.value;
     }
 
@@ -93,12 +99,53 @@ const BodyComponent = ({ lot }) => {
 
     const saveChanges = (e) => {
         if ("input" === e.target.value) {
+            console.log("registro: " + register);
+            lot.contract_register = register;
             contract.register = register;
             contract.time_in = timeInit;
+            lots.map((item) => {
+                if(item.id_lot === lot.id_lot){
+                    item.contract_register = register
+                }
+            }
+            )
         }
         if ("output" === e.target.value) {
 
         }
+        setSaved(true);
+        forceUpdate();
+        updateList();
+        newContract();
+    }
+
+    const newContract = () =>{
+        contract.state = "VIGENTE";
+        if(lot.state === "OCUPADO"){
+            toast.error("El lote esta actualmente ocupado por un vehiculo no ingresar otro.", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 20000
+            });
+        } else{
+            contract.lot.id_lot = lot.id_lot
+            fetch('http://127.0.0.1:8080/api/v1/contract/save', {
+            method: 'POST',
+            body: JSON.stringify(contract),
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            }
+        }
+        )
+            .then(response => response.json())
+            .then(json => {
+                updateList();
+            }
+            )
+            .catch(error => console.error(error));
+        }
+        
     }
 
     return (
@@ -118,7 +165,7 @@ const BodyComponent = ({ lot }) => {
                 </div>
                 <div className='div'>
                     <label className='label'><b>PLACA:</b></label>
-                    <input className="input" value={contract.register} onChange={changeRegister} />
+                    <input className="input" value={lot.contract_register} onChange={changeRegister} />
                 </div>
                 <div className='div'>
                     <label className='label'><b>HORA ENTRADA:</b></label>
@@ -143,6 +190,7 @@ const BodyComponent = ({ lot }) => {
                 <button className='button' value="input" onClick={saveChanges}>INGRESO</button>
                 <button className='button' value="output" onClick={saveChanges}>SALIDA</button>
             </div>
+            <ToastContainer />
         </div>
     )
 }

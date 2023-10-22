@@ -3,14 +3,14 @@ import TableComponent from './table-component';
 import './administration.css'
 
 const Lot = ({ lot, lots, updateLot }) => {
-    const[style, setStyle] = useState(lot.style);
+    //const[style, setStyle] = useState(lot.style);
     //const [_, forceUpdate] = useReducer(x => x + 1, 0);
 
     const changeStyle = () => {
         if (lot.clicked === "SI") {
             lot.clicked = "NO";
             lot.style = lot.state;
-            setStyle(lot.state);
+            //setStyle(lot.state);
         } else {
             lots.map((item) => {
                 item.clicked = "NO";
@@ -19,7 +19,7 @@ const Lot = ({ lot, lots, updateLot }) => {
             );
             lot.clicked = "SI";
             lot.style = "CLICKED";
-            setStyle("CLICKED");
+            //setStyle("CLICKED");
         }
         updateLot();
         //forceUpdate();
@@ -32,7 +32,7 @@ const Lot = ({ lot, lots, updateLot }) => {
             >
                 <div>
                     <img src={`${process.env.PUBLIC_URL + "/figures/" + lot.type + '.png'}`} width="26" height="18" /><figcaption>{lot.code}</figcaption>
-                    <div style={{ color: 'yellow' }}>{lot.register}</div>
+                    <div style={{ color: 'yellow' }}>{lot.contract_register}</div>
                 </div>
             </div>
         </div>
