@@ -5,6 +5,7 @@ import TableComponent from './table-component';
 import './configuration.css'
 import ResponsiveAppBar from '../responsive-app-bar';
 import { useAuth } from "../util/AuthContext"
+import ConfirmBox from "react-dialog-confirm";
 
 const emptyLot = {
     code: "",
@@ -14,117 +15,44 @@ const emptyLot = {
     clicked: "NO",
     style: "",
     parking: {
-        id_parking: 5
+        id_parking: 1
     }
 }
 
-const test = [
-    {
-        code: "A1",
-        register: "",
-        id_lot: "",
-        type: "AUTOMOVIL",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-    {
-        code: "A2",
-        register: "",
-        id_lot: "",
-        type: "AUTOMOVIL",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-    {
-        code: "A3",
-        register: "",
-        id_lot: "",
-        type: "AUTOMOVIL",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-    {
-        code: "A4",
-        register: "",
-        id_lot: "",
-        type: "MOTOCICLETA",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-    {
-        code: "A5",
-        register: "",
-        id_lot: "",
-        type: "MOTOCICLETA",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-    {
-        code: "A6",
-        id_lot: "",
-        register: "",
-        type: "MOTOCICLETA",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-    {
-        code: "A7",
-        id_lot: "",
-        register: "",
-        type: "MOTOCICLETA",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-    {
-        code: "A8",
-        id_lot: "",
-        register: "",
-        type: "AUTOMOVIL",
-        state: "LIBRE",
-        clicked: "NO",
-        style: "LIBRE",
-        parking: {
-            id_parking: 5
-        }
-    },
-]
+
+const emptyParking = {
+    id_parking: "",
+    name: "",
+    address: "",
+    longitude: "",
+    latitude: "",
+    attention: "",
+    state: ""
+}
+
+
 
 const ConfigurationComponent = () => {
-    const [lots, setLots] = useState(test);
+    const [parking, setParking] = useState(emptyParking);
+    const [lots, setLots] = useState([]);
     const [lot, setLot] = useState(emptyLot);
     const [id, setId] = useState(lot.code);
+    const [costs, setCosts] = useState([]);
+    const [cost, setCost] = useState("0");
     const [dataTable, setDataTable] = useState([]);
+    const [selectedHorType, setSelectedHorType] = useState('SEMANA');
     const [selectedLotType, setSelectedLotType] = useState('AUTOMOVIL');
+    const [selectedLotTypeCost, setSelectedLotTypeCost] = useState('AUTOMOVIL');
     const [selectedLotState, setSelectedLotState] = useState('LIBRE');
     const [selectedParkingState, setSelectedParkingState] = useState('ABIERTO');
+
+
+    const[inputNombre, setInputNombre] = useState();
+    const[inputDireccion, setInputDireccion] = useState();
+    const[inputLatitud, setInputLatitud] = useState();
+    const[inputLongitud, setInputLongitud] = useState();
+    const[inputHorario, setInputHorario] = useState();
+
     const Auth = useAuth();
 
     const updateLot = () => {
@@ -166,14 +94,60 @@ const ConfigurationComponent = () => {
         }
     }
 
+    const handleParkingName = (e) => {
+        setInputNombre(e.target.value);
+        parking.name = e.target.value
+    }
+
+    const handleParkingDireccion = (e) => {
+        setInputDireccion(e.target.value);
+        parking.address = e.target.value
+    }
+
+    const handleParkingLatitud = (e) => {
+        setInputLatitud(e.target.value);
+        parking.latitude = e.target.value;
+    }
+
+    const handleParkingLongitud = (e) => {
+        setInputLongitud(e.target.value);
+        parking.longitude = e.target.value;
+
+    }
+
+    const handleParkingPrecio = () => {
+
+
+    }
+
+    const handleParkingHorarioNormal = (e) => {
+        setInputHorario(e.target.value);
+        parking.attention = e.target.value;
+    }
+
+    const handleParkingHorarioFin = () => {
+
+    }
+
+    const handleParkingAttention = () => {
+
+    }
     //******************************UTIL COMPONENTS API *******************************/
     useEffect(() => {
         apiQuery();
+        parkingInfo();
+        apiCost();
     }, []);
+
+    useEffect(() => {
+        validateCost();
+    }, [selectedLotTypeCost]);
 
     useEffect(() => {
         fullTable();
     }, [lots]);
+
+    
 
     const apiMaintenaince = (e) => {
         e.preventDefault();
@@ -181,8 +155,9 @@ const ConfigurationComponent = () => {
             method: 'POST',
             body: JSON.stringify(lot),
             headers: {
+                Accept: 'application/json',
                 'Content-type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer' + Auth.getToken()
+                'Authorization': 'Bearer ' + Auth.getToken()
             },
         })
             .then((res) => res.json())
@@ -196,8 +171,7 @@ const ConfigurationComponent = () => {
     };
 
     const apiQuery = () => {
-        console.log("use effect se ejecuta...");
-        fetch('http://127.0.0.1:8080/api/v1/lot/getByParkingId/5', {
+        fetch('http://127.0.0.1:8080/api/v1/lot/getByParkingId/1', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -215,12 +189,54 @@ const ConfigurationComponent = () => {
             .catch(error => console.error(error));
     }
 
+
+    const apiCost = ()=>{
+        fetch('http://127.0.0.1:8080/api/v1/cost/getByParkingId/1', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                setCosts(json);
+            }
+            )
+            .catch(error => console.error(error));
+    }
+
+    const parkingInfo = () => {
+        fetch('http://127.0.0.1:8080/api/v1/parking/getById/1', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            }
+        }
+        )
+            .then(response => response.json())
+            .then(json => {
+                setParking(json);
+            }
+            )
+            .catch(error => console.error(error));
+    }
+
     const fullTable = () => {
+        setInputNombre(parking.name);
+        setInputDireccion(parking.address);
+        setInputLatitud(parking.latitude);
+        setInputLongitud(parking.longitude);
+        setInputHorario(parking.attention);
+        validateCost();
+
         var counter = 0;
         const arrayVertical = [];
         var arrayHorizontal = [];
         setDataTable([]);
-        console.log("tamano:" + lots.length);
         for (var i = 0; i < lots.length; i++) {
             if (counter == 4 || (i === (lots.length - 1))) {
                 counter = 0;
@@ -235,10 +251,28 @@ const ConfigurationComponent = () => {
     }
     //*********************************************************************************/
 
+    const validateCost = () =>{
+        console.log(costs);
+        
+        for(var i = 0; i < costs.length; i++) {
+            console.log(selectedLotTypeCost)
+            console.log(costs[i].type)
+            console.log("-----------------")
+            if(selectedLotTypeCost === costs[i].type){
+                console.log('xxxxxxxxxxxxxxxx')
+                setCost(costs[i].cost)
+            }
+        }
+    }
+
+    const move01 = (e) =>{
+        setSelectedLotTypeCost(e.target.value)
+    }
+
     return (
         <div className='body3'>
             <ResponsiveAppBar></ResponsiveAppBar>
-            <h4 className='title2'>CONFIGURACIÓN GENERAL</h4>
+            <h4 className='title22'>CONFIGURACIÓN GENERAL</h4>
             <div className='left2'>
                 <div className='left3'>
                     <div className='scrollable2'>
@@ -273,39 +307,35 @@ const ConfigurationComponent = () => {
                     <div className='div32'>
                         <button className='button2' value="edit" onClick={saveChangesLot} >MODIFICAR</button>
                     </div>
-                    <div className='div32'>
-                        <button className='button2' value="cancel" onClick={saveChangesLot} >CANCELAR</button>
-                    </div>
                 </div>
             </div>
             <div className='right2'>
                 <div className='div2'>
                     <label className='label3'><b>NOMBRE DEL PARQUEADERO:</b></label>
-                    <input className="input3" /><br></br>
+                    <input className="input3" value={inputNombre} onChange={handleParkingName} /><br></br>
                     <label className='label3'><b>ESTADO:</b></label>
                     <select className="select2" value={selectedParkingState} onChange={e => setSelectedParkingState(e.target.value)}>
                         <option value="ABIERTO">ABIERTO</option>
                         <option value="CERRADO">CERRADO</option>
                     </select><br></br>
                     <label className='label3'><b>DIRECCIÓN:</b></label>
-                    <input className="input3" /><br></br>
+                    <input className="input3" value={inputDireccion} onChange={handleParkingDireccion} /><br></br>
                     <label className='label3'><b>LATITUD:</b></label>
-                    <input className="input2" /><br></br>
+                    <input className="input2" value={inputLatitud} onChange={handleParkingLatitud} /><br></br>
                     <label className='label3'><b>LONGITUD:</b></label>
-                    <input className="input2" /><br></br>
+                    <input className="input2" value={inputLongitud} onChange={handleParkingLongitud} /><br></br>
                     <label className='label3'><b>PRECIO POR MINUTO:</b></label>
-                    <input className="input2" /><br></br>
-                    <label className='label3'><b>HORARIO DE LUNES A VIERNES:</b></label>
-                    <input className="input3" /><br></br>
-                    <label className='label3'><b>HORARIO DE FINES DE SEMANA:</b></label>
-                    <input className="input3" />
+                    <input className="input222" value={cost}/>
+                    <select className="select2" value={selectedLotTypeCost} onChange={move01}>
+                        <option value="AUTOMOVIL">AUTOMOVIL</option>
+                        <option value="MOTOCICLETA">MOTOCICLETA</option>
+                    </select>
+                    <label className='label3'><b>HORARIO ATENCIÓN:</b></label>
+                    <input className="input3" value={inputHorario} onChange={handleParkingAttention} /><br></br>
                     <br></br>
                     <br></br>
                     <div className='div4'>
-                        <button className='button2' value="input" >GUARDAR</button>
-                    </div>
-                    <div className='div42'>
-                        <button className='button2' value="input" >CANCELAR</button>
+                        <button className='button2' value="input" >MODIFICAR</button>
                     </div>
                 </div>
             </div>

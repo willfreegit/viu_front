@@ -13,11 +13,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/util/AuthContext"
 
 const pages = ['Administración', 'Configuración', 'Usuarios'];
-const settings = ['Ver Perfil', 'Configuración Cuenta', 'Salir'];
+const settings = ['Cerrar Sesión'];
 
 function ResponsiveAppBar() {
+  const Auth = useAuth();
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -35,14 +37,15 @@ function ResponsiveAppBar() {
   };
 
   const openNewPage = (page) => {
-    console.log(page);
     let path = page === 'Administración' ? `/administrator` : (page === 'Configuración' ? `/configuration` :  `/signin`);
     navigate(path);
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    Auth.userLogout();
+    navigate('/');
+    //setAnchorElUser(null);
   };
 
   return (

@@ -17,8 +17,6 @@ const emptyContract = {
   }
 
 const BodyComponent = ({ lot }) => {
-    console.log("lot =================>");
-    console.log(lot);
     const [contract, setContract] = useState(emptyContract);
     const [timeInit, setTimeInit] = useState(contract.time_in ? contract.time_in : new Date);
     const [timeFinal, setTimeFinal] = useState(new Date);

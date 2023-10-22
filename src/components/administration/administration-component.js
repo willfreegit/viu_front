@@ -141,8 +141,6 @@ const AdministrationComponent = () => {
     }, [lots]);
 
     const apiQuery = () => {
-        console.log("use effect se ejecuta... con el token");
-        console.log(Auth.getToken());
         fetch('http://127.0.0.1:8080/api/v1/lot/getByParkingId/5', {
             method: 'GET',
             headers: {
@@ -166,7 +164,6 @@ const AdministrationComponent = () => {
         const arrayVertical = [];
         var arrayHorizontal = [];
         setDataTable([]);
-        console.log("tamano:" + lots.length);
         for (var i = 0; i < lots.length; i++) {
             if (counter == 7 || (i === (lots.length - 1))) {
                 counter = 0;
